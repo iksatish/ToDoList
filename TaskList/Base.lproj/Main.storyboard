@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gAR-24-WFh">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Task List-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NDs-2N-PFh">
-                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
+                                <rect key="frame" x="0.0" y="506" width="600" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="oGJ-ll-Qi7"/>
@@ -29,7 +29,7 @@
                                 </items>
                             </tabBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="K6X-QF-E6P">
-                                <rect key="frame" x="0.0" y="55" width="600" height="496"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="442"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="datacell" id="Kyo-MT-32l">
@@ -46,23 +46,27 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="z55-5e-Sw2"/>
                                 </connections>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="topRight" semanticContentAttribute="forceRightToLeft" translatesAutoresizingMaskIntoConstraints="NO" id="mqe-5c-AP7">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="topRight" semanticContentAttribute="forceRightToLeft" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqe-5c-AP7">
+                                <rect key="frame" x="0.0" y="555" width="600" height="45"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="hgq-39-WNS"/>
+                                    <constraint firstAttribute="height" constant="45" id="hgq-39-WNS"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem image="menu" id="Hmf-hf-1tQ">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                                    <barButtonItem image="menu" id="Hmf-hf-1tQ"/>
+                                    <barButtonItem title="Delete" id="6xa-l1-Yfo">
+                                        <connections>
+                                            <action selector="deleteTasks:" destination="BYZ-38-t0r" id="tP2-Mg-Odh"/>
+                                        </connections>
                                     </barButtonItem>
-                                    <barButtonItem image="delete" id="6xa-l1-Yfo">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                                    <barButtonItem title="Save" id="oVK-gU-fi6">
+                                        <connections>
+                                            <action selector="saveTasks:" destination="BYZ-38-t0r" id="GeN-Kd-6F2"/>
+                                        </connections>
                                     </barButtonItem>
-                                    <barButtonItem image="save" id="oVK-gU-fi6">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
-                                    </barButtonItem>
-                                    <barButtonItem image="add" id="TJx-3Y-Rr8">
-                                        <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-10"/>
+                                    <barButtonItem title="Add" id="TJx-3Y-Rr8">
+                                        <connections>
+                                            <action selector="addNewTask:" destination="BYZ-38-t0r" id="VvS-tG-lS9"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
@@ -71,28 +75,61 @@
                         <constraints>
                             <constraint firstItem="NDs-2N-PFh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="5tS-J4-Xob"/>
                             <constraint firstAttribute="trailing" secondItem="mqe-5c-AP7" secondAttribute="trailing" id="9N3-N1-QfN"/>
+                            <constraint firstItem="K6X-QF-E6P" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Bvm-yl-Nfj"/>
                             <constraint firstItem="mqe-5c-AP7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="F2i-IE-Wdn"/>
+                            <constraint firstAttribute="bottom" secondItem="mqe-5c-AP7" secondAttribute="bottom" id="K4W-5x-g8l"/>
                             <constraint firstAttribute="trailing" secondItem="NDs-2N-PFh" secondAttribute="trailing" id="Te9-Ou-Fbt"/>
                             <constraint firstItem="K6X-QF-E6P" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="UhE-0x-9rm"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NDs-2N-PFh" secondAttribute="bottom" id="jKA-ed-9h9"/>
                             <constraint firstItem="NDs-2N-PFh" firstAttribute="top" secondItem="K6X-QF-E6P" secondAttribute="bottom" id="kXU-FF-MXt"/>
+                            <constraint firstItem="NDs-2N-PFh" firstAttribute="bottom" secondItem="mqe-5c-AP7" secondAttribute="top" id="lRN-LS-bUx"/>
                             <constraint firstAttribute="trailing" secondItem="K6X-QF-E6P" secondAttribute="trailing" id="rws-9F-lAh"/>
                             <constraint firstItem="K6X-QF-E6P" firstAttribute="top" secondItem="mqe-5c-AP7" secondAttribute="bottom" id="uKh-xP-de9"/>
                             <constraint firstItem="mqe-5c-AP7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="wT3-GS-Irv"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="uKh-xP-de9"/>
+                                <exclude reference="wT3-GS-Irv"/>
+                                <exclude reference="jKA-ed-9h9"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="Task List" id="jgY-Nh-yhM">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="Xp2-qb-wt2">
+                            <connections>
+                                <action selector="cancelDeletion:" destination="BYZ-38-t0r" id="27r-xe-UUM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableview" destination="K6X-QF-E6P" id="WLV-fR-BIA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1252" y="358"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="gmj-oy-MUE">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gAR-24-WFh" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hx9-G8-Hog">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="eIV-bd-KUb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="noL-bh-4fJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="440" y="358"/>
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="20" height="20"/>
-        <image name="delete" width="20" height="20"/>
         <image name="menu" width="20" height="20"/>
-        <image name="save" width="20" height="20"/>
     </resources>
 </document>
