@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddTaskViewController.h"
 
-@interface ViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface ViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UIPopoverPresentationControllerDelegate, AddNewTaskDelegate>
 
 @property (strong, nonatomic) NSMutableDictionary *tasksDictionary;
 @property (strong, nonatomic) NSMutableArray *selectedTasks;
 @property (nonatomic) BOOL isEditable;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UITabBar *tabbar;
 
 - (IBAction)addNewTask:(UIBarButtonItem *)sender;
 - (IBAction)deleteTasks:(UIBarButtonItem *)sender;
