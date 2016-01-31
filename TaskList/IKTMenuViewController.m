@@ -45,15 +45,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"datacell"];
     if (indexPath.row == 0){
-        cell.textLabel.text = @"About";
+        cell.textLabel.text = _isUsedForSharing ? @"Email" : @"About";
     }else{
-        cell.textLabel.text = @"FAQ/Directions";
+        cell.textLabel.text = _isUsedForSharing ? @"Text Message" : @"FAQ/Directions";
     }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.delegate selectMenuOption:indexPath.row];
+    [self.delegate selectMenuOption:indexPath.row for:_isUsedForSharing];
+    
 }
+
+
 @end

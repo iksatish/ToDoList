@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @protocol IKTMenuDelegate<NSObject>
-- (void)selectMenuOption:(NSInteger)menuOption;
+- (void)selectMenuOption:(NSInteger)menuOption for:(NSInteger)usageOption;
 @end
 
 @interface IKTMenuViewController : UITableViewController
 
 @property (weak,nonatomic) id <IKTMenuDelegate> delegate;
+@property (nonatomic) BOOL isUsedForSharing;
+
 @end

@@ -70,19 +70,28 @@
                                             </segue>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Delete" id="6xa-l1-Yfo">
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <action selector="deleteTasks:" destination="BYZ-38-t0r" id="tP2-Mg-Odh"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Save" id="oVK-gU-fi6">
+                                    <barButtonItem image="save1" id="oVK-gU-fi6">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="saveTasks:" destination="BYZ-38-t0r" id="GeN-Kd-6F2"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Add" id="TJx-3Y-Rr8">
+                                    <barButtonItem width="40" systemItem="trash" id="6xa-l1-Yfo">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="deleteTasks:" destination="BYZ-38-t0r" id="tP2-Mg-Odh"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="action" id="nMi-Fo-wbf">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="shareTasks:" destination="BYZ-38-t0r" id="KIH-pm-fVv"/>
+                                            <segue destination="iCY-gF-OrG" kind="popoverPresentation" identifier="sharingOptionsIdentifier" popoverAnchorBarButtonItem="nMi-Fo-wbf" id="lxx-o2-ezr">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="add" id="TJx-3Y-Rr8">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <segue destination="XBE-ML-gSv" kind="popoverPresentation" identifier="newtaskpopover" popoverAnchorBarButtonItem="TJx-3Y-Rr8" id="K9v-wV-U4g">
@@ -125,13 +134,16 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Task List" id="jgY-Nh-yhM">
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="Xp2-qb-wt2">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="Xp2-qb-wt2">
+                            <color key="tintColor" red="1" green="0.015686274510000001" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="cancelDeletion:" destination="BYZ-38-t0r" id="27r-xe-UUM"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteBtn" destination="6xa-l1-Yfo" id="5eV-Sd-U0f"/>
+                        <outlet property="shareBtn" destination="nMi-Fo-wbf" id="bhK-RN-bJ7"/>
                         <outlet property="tabbar" destination="NDs-2N-PFh" id="cXP-Qa-5Lj"/>
                         <outlet property="tableview" destination="K6X-QF-E6P" id="WLV-fR-BIA"/>
                         <segue destination="6lS-Ny-SU0" kind="presentation" identifier="showFaqIdentifier" id="Icp-6F-SDi"/>
@@ -229,7 +241,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DPE-0b-teJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1691" y="1039"/>
+            <point key="canvasLocation" x="1719" y="1147"/>
         </scene>
         <!--Add Task View Controller-->
         <scene sceneID="gBH-2A-Hcr">
@@ -418,6 +430,10 @@
         <image name="home" width="32" height="32"/>
         <image name="menu" width="20" height="20"/>
         <image name="misc" width="32" height="32"/>
+        <image name="save1" width="24" height="24"/>
         <image name="work1" width="32" height="32"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="lxx-o2-ezr"/>
+    </inferredMetricsTieBreakers>
 </document>

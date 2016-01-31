@@ -21,12 +21,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self loadTempData];
-    _isEditable = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillTerminateNotification:)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:[UIApplication sharedApplication]];
-    [self disableBarButton:self.navigationItem.rightBarButtonItem needsDisabled:YES];
+    [self toggleBarButtons:YES];
+    
     self.tabbar.selectedItem = self.tabbar.items.firstObject;
     _selectedTab = [IKTGlobal sharedInstance].kCategoryWork;
     
@@ -37,6 +37,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidEnterBackgroundNotification
                                                   object:[UIApplication sharedApplication]];
+    [self toggleBarButtons:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -70,9 +71,6 @@
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.numberOfLines = 0;
     cell.accessoryType = UITableViewCellAccessoryNone;
-    UILongPressGestureRecognizer * gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(selectCell:)];
-    [cell addGestureRecognizer:gesture];
-    
     return cell;
 }
 
@@ -85,22 +83,18 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_isEditable){
-        UITableViewCell *cell = [_tableview cellForRowAtIndexPath:indexPath];
-        if (cell.accessoryType == UITableViewCellAccessoryNone){
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        }else{
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
+    if (!_isEditable){
+        [self toggleBarButtons:NO];
     }
+    UITableViewCell *cell = [_tableview cellForRowAtIndexPath:indexPath];
+    if (cell.accessoryType == UITableViewCellAccessoryNone){
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+
 }
 
-- (void)selectCell:(UIGestureRecognizer*)gesture{
-    UITableViewCell *cell = (UITableViewCell*)gesture.view;
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    [self disableBarButton:self.navigationItem.rightBarButtonItem needsDisabled:NO];
-    _isEditable = YES;
-}
 #pragma mark Data
 
 - (void) loadTempData{
@@ -108,10 +102,6 @@
     NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,[IKTGlobal sharedInstance].kTaskList_DataFile];
     NSMutableArray *fileContents = [[NSMutableArray alloc]initWithArray:[[NSArray alloc] initWithContentsOfFile:filePath]];
     _allTasks = [IKTTaskData convertFileContents:fileContents];
-//    if (!_allTasks){
-//        _allTasks = [[NSMutableArray alloc]init];
-//        _currentTasks = [[NSMutableArray alloc]init];
-//    }
     if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
         [[NSFileManager defaultManager] createFileAtPath:filePath
                                                 contents:nil
@@ -142,9 +132,13 @@
 }
 
 - (IBAction)cancelDeletion:(UIBarButtonItem *)sender {
-    _isEditable = NO;
     [_tableview reloadData];
-    [self disableBarButton:self.navigationItem.rightBarButtonItem needsDisabled:YES];
+    [self toggleBarButtons:YES];
+}
+
+- (IBAction)shareTasks:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"sharingOptionsIdentifier" sender:nil];
+    [self shareByTextMsg:@""];
 }
 
 - (IBAction)deleteTasks:(UIBarButtonItem *)sender {
@@ -159,8 +153,7 @@
             }
         }
         [_tableview reloadData];
-        [self disableBarButton:self.navigationItem.rightBarButtonItem needsDisabled:YES];
-        _isEditable = NO;
+        [self toggleBarButtons:YES];
     }else{
         NSMutableArray *alertActions = [[NSMutableArray alloc]init];
         UIAlertAction* okAction = [UIAlertAction
@@ -208,18 +201,7 @@
     [self presentAlertController:@"Save Tasks" withMessage:message handlingActions:alertActions];
 }
 
-//- (void) addTaskFromDialogBox:(TaskData *)newTaskData{
-//    
-//    NSMutableDictionary *taskdict = [[NSMutableDictionary alloc] init];
-//    [taskdict setValue:[newTaskData valueForKey:@"TASKINFO"] forKey:[IKTGlobal sharedInstance].kTaskDesc];
-//    [taskdict setValue:[newTaskData valueForKey:@"PRIORITY"] forKey:[IKTGlobal sharedInstance].kTaskPriority];
-//    [taskdict setValue:[newTaskData valueForKey:@"CATEGORY"] forKey:[IKTGlobal sharedInstance].kTaskCategory];
-//    [taskdict setValue:[newTaskData valueForKey:@"DATETIME"] forKey:[IKTGlobal sharedInstance].kTaskDateTime];
-//    [_selectedTasks addObject:taskdict];
-//    [_tableview reloadData];
-//}
-
-#pragma mark AlertController    
+#pragma mark AlertController
 
 - (void)presentAlertController:(NSString*)title withMessage:(NSString*)message handlingActions:(NSArray*)actions{
     UIAlertController * alertController=   [UIAlertController
@@ -234,9 +216,12 @@
 
 #pragma mark Toggle Bar button
 
-- (void) disableBarButton:(UIBarButtonItem *)barButton needsDisabled:(BOOL) disabled{
-    barButton.tintColor = disabled?[UIColor clearColor]:[UIColor whiteColor];
-    barButton.enabled = !disabled;
+- (void) toggleBarButtons:(BOOL) disabled{
+    self.navigationItem.rightBarButtonItem.tintColor = disabled?[UIColor clearColor]:[UIColor whiteColor];
+    [self.navigationItem.rightBarButtonItem setEnabled:!disabled];
+    self.deleteBtn.enabled = !disabled;
+    self.shareBtn.enabled = !disabled;
+    _isEditable = !disabled;
 }
 
 #pragma mark Handling Notifications
@@ -261,6 +246,7 @@
         default:
             break;
     }
+    [self toggleBarButtons:YES];
     [self setCurrentTasksList:_selectedTab];
 }
 
@@ -268,15 +254,21 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier  isEqual: @"newtaskpopover"]){
-        IKTAddTaskViewController *desinationController = (IKTAddTaskViewController*)segue.destinationViewController;
-        desinationController.popoverPresentationController.delegate = self;
-        desinationController.delegate = self;
-        desinationController.preferredContentSize = CGSizeMake(320,320);
+        IKTAddTaskViewController *destinationController = (IKTAddTaskViewController*)segue.destinationViewController;
+        destinationController.popoverPresentationController.delegate = self;
+        destinationController.delegate = self;
+        destinationController.preferredContentSize = CGSizeMake(320,320);
     }else if ([segue.identifier isEqualToString:@"menupopover"]){
-        IKTMenuViewController *desinationController = (IKTMenuViewController*)segue.destinationViewController;
-        desinationController.popoverPresentationController.delegate = self;
-        desinationController.preferredContentSize = CGSizeMake(150,87);
-        desinationController.delegate = self;
+        IKTMenuViewController *destinationController = (IKTMenuViewController*)segue.destinationViewController;
+        destinationController.popoverPresentationController.delegate = self;
+        destinationController.preferredContentSize = CGSizeMake(150,87);
+        destinationController.delegate = self;
+    }else if([segue.identifier isEqualToString:@"sharingOptionsIdentifier"]){
+        IKTMenuViewController *destinationController = (IKTMenuViewController*)segue.destinationViewController;
+        destinationController.popoverPresentationController.delegate = self;
+        destinationController.preferredContentSize = CGSizeMake(150,87);
+        destinationController.isUsedForSharing = YES;
+        destinationController.delegate = self;
     }
 }
 
@@ -304,21 +296,86 @@
     }
 }
 
-- (void)selectMenuOption:(NSInteger)menuOption{
-    if (menuOption == 0){
-        UIAlertAction* okAction = [UIAlertAction
-                                   actionWithTitle:@"OK"
-                                   style:UIAlertActionStyleCancel
-                                   handler:^(UIAlertAction * action)
-                                   {
-                                       NSLog(@"Dismissed Alert");
-                                   }];
-        NSArray *alertActions = [[NSArray alloc]initWithObjects:okAction, nil];
-        NSString *message = @"Task List v1.0 \nDeveloped By Satish \n Lorem Impsum Lorem Impsum ";
-        NSString *title = @"About";
-        [self presentAlertController:title withMessage:message handlingActions:alertActions];
-    }else{
-        [self performSegueWithIdentifier:@"showFaqIdentifier" sender:nil];
+- (void)selectMenuOption:(NSInteger)menuOption for:(NSInteger)usageOption{
+    switch (usageOption) {
+        case 0:
+            if (menuOption == 0){
+                UIAlertAction* okAction = [UIAlertAction
+                                           actionWithTitle:@"OK"
+                                           style:UIAlertActionStyleCancel
+                                           handler:^(UIAlertAction * action)
+                                           {
+                                               NSLog(@"Dismissed Alert");
+                                           }];
+                NSArray *alertActions = [[NSArray alloc]initWithObjects:okAction, nil];
+                NSString *message = @"Task List v1.0 \nDeveloped By Satish \n Lorem Impsum Lorem Impsum ";
+                NSString *title = @"About";
+                [self presentAlertController:title withMessage:message handlingActions:alertActions];
+            }else{
+                [self performSegueWithIdentifier:@"showFaqIdentifier" sender:nil];
+            }
+            break;
+        case 1:
+            [self initializeSharing:menuOption];
+        default:
+            break;
     }
 }
+
+
+#pragma mark - Sharing options
+
+- (void) initializeSharing:(NSInteger)sharingOption{
+    int section = 0, noofTasks = 0;
+    NSString *msgBody = @"I am sharing these tasks with you:";
+    for (int row = 0; row < (int)[_tableview numberOfRowsInSection:section]; row++) {
+        NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:section];
+        UITableViewCell* cell = [_tableview cellForRowAtIndexPath:cellPath];
+        if([cell accessoryType] == UITableViewCellAccessoryCheckmark){
+            msgBody = [NSString stringWithFormat:@"%@\n%@", msgBody, cell.textLabel.text];
+            noofTasks++;
+        }
+    }
+    if (noofTasks == 0){
+        for (IKTTaskData * data in _currentTasks){
+            msgBody = [NSString stringWithFormat:@"%@\n%@", msgBody, data.taskInfo];
+        }
+    }
+    if (sharingOption == 0){
+        [self shareByEmail:msgBody];
+    }else {
+        [self shareByTextMsg:msgBody];
+    }
+}
+
+- (void) shareByTextMsg:(NSString*) msgBody{
+    MFMessageComposeViewController* composeVC = [[MFMessageComposeViewController alloc] init];
+    composeVC.messageComposeDelegate = self;
+    composeVC.recipients = @[@""];
+    composeVC.body = msgBody;
+    [self presentViewController:composeVC animated:YES completion:nil];
+}
+
+- (void) shareByEmail:(NSString*) msgBody{
+    if (![MFMailComposeViewController canSendMail]) {
+        NSLog(@"Mail services are not available.");
+        return;
+    }
+    MFMailComposeViewController* composeVC = [[MFMailComposeViewController alloc] init];
+    composeVC.mailComposeDelegate = self;
+    [composeVC setSubject:@"Tasks - To Do List"];
+    [composeVC setMessageBody:msgBody isHTML:NO];
+    [self presentViewController:composeVC animated:YES completion:nil];
+}
+
+-(void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end
