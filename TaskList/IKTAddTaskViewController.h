@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSMutableDictionary *selectedPickerViewData;
 @property (strong, nonatomic) IKTTaskData *taskData;
 @property (weak,nonatomic) id <IKTAddNewTaskDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UISwitch *notificaitonSwitch;
 
 
 - (IBAction)addTask:(UIButton *)sender;

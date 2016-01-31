@@ -280,25 +280,16 @@
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a0d-Cx-s8S" userLabel="view">
-                                <rect key="frame" x="0.0" y="99" width="320" height="216"/>
+                                <rect key="frame" x="0.0" y="99" width="320" height="221"/>
                                 <subviews>
                                     <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="U9X-62-g8h">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                        <rect key="frame" x="0.0" y="20" width="320" height="201"/>
                                         <date key="date" timeIntervalSinceReferenceDate="475886439.71341503">
                                             <!--2016-01-30 22:40:39 +0000-->
                                         </date>
                                     </datePicker>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your Task" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i7b-7i-9bD">
-                                        <rect key="frame" x="0.0" y="15" width="320" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="FJd-SC-iSl"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MaM-RZ-OFr">
-                                        <rect key="frame" x="20" y="41" width="280" height="155"/>
+                                        <rect key="frame" x="20" y="31" width="280" height="170"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -308,28 +299,45 @@
                                         </connections>
                                     </textView>
                                     <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lBu-VY-8xa">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="221"/>
                                         <connections>
                                             <outlet property="dataSource" destination="XBE-ML-gSv" id="d76-J0-bl2"/>
                                             <outlet property="delegate" destination="XBE-ML-gSv" id="4eC-fU-BTv"/>
                                         </connections>
                                     </pickerView>
                                     <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQ9-An-T9S">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="221"/>
                                         <connections>
                                             <outlet property="dataSource" destination="XBE-ML-gSv" id="dhN-ib-u0g"/>
                                             <outlet property="delegate" destination="XBE-ML-gSv" id="cjV-HS-iz6"/>
                                         </connections>
                                     </pickerView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Task Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i7b-7i-9bD">
+                                        <rect key="frame" x="50" y="5" width="220" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="FJd-SC-iSl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FFB-XX-p3f">
+                                        <rect key="frame" x="263" y="0.0" width="51" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="fEp-Ax-Vet"/>
+                                            <constraint firstAttribute="width" constant="49" id="iTh-iE-vAg"/>
+                                        </constraints>
+                                    </switch>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="U9X-62-g8h" firstAttribute="top" secondItem="a0d-Cx-s8S" secondAttribute="top" id="8Eb-bk-BMm"/>
-                                    <constraint firstItem="i7b-7i-9bD" firstAttribute="leading" secondItem="a0d-Cx-s8S" secondAttribute="leading" id="AC9-Ca-NxK"/>
-                                    <constraint firstAttribute="trailing" secondItem="i7b-7i-9bD" secondAttribute="trailing" id="En8-vU-YGU"/>
+                                    <constraint firstItem="U9X-62-g8h" firstAttribute="top" secondItem="a0d-Cx-s8S" secondAttribute="top" constant="20" id="8Eb-bk-BMm"/>
+                                    <constraint firstItem="i7b-7i-9bD" firstAttribute="leading" secondItem="a0d-Cx-s8S" secondAttribute="leading" constant="50" id="AC9-Ca-NxK"/>
+                                    <constraint firstAttribute="trailing" secondItem="FFB-XX-p3f" secondAttribute="trailing" constant="8" id="ETH-SQ-9de"/>
+                                    <constraint firstAttribute="trailing" secondItem="i7b-7i-9bD" secondAttribute="trailing" constant="50" id="En8-vU-YGU"/>
                                     <constraint firstAttribute="trailing" secondItem="U9X-62-g8h" secondAttribute="trailing" id="FpE-tF-Eie"/>
                                     <constraint firstAttribute="bottom" secondItem="KQ9-An-T9S" secondAttribute="bottom" id="IqX-Wm-92q"/>
-                                    <constraint firstItem="i7b-7i-9bD" firstAttribute="top" secondItem="a0d-Cx-s8S" secondAttribute="top" constant="15" id="Qn0-VW-eTe"/>
+                                    <constraint firstItem="i7b-7i-9bD" firstAttribute="top" secondItem="a0d-Cx-s8S" secondAttribute="top" constant="5" id="Qn0-VW-eTe"/>
                                     <constraint firstItem="MaM-RZ-OFr" firstAttribute="leading" secondItem="a0d-Cx-s8S" secondAttribute="leading" constant="20" id="SUk-8L-mde"/>
                                     <constraint firstAttribute="trailing" secondItem="lBu-VY-8xa" secondAttribute="trailing" id="U37-JY-c46"/>
                                     <constraint firstAttribute="bottom" secondItem="U9X-62-g8h" secondAttribute="bottom" id="U9Z-6k-Vve"/>
@@ -342,12 +350,14 @@
                                     <constraint firstItem="lBu-VY-8xa" firstAttribute="leading" secondItem="a0d-Cx-s8S" secondAttribute="leading" id="nBw-WE-q7z"/>
                                     <constraint firstAttribute="trailing" secondItem="MaM-RZ-OFr" secondAttribute="trailing" constant="20" id="nce-Ya-8MU"/>
                                     <constraint firstAttribute="bottom" secondItem="MaM-RZ-OFr" secondAttribute="bottom" constant="20" id="t2d-Lb-k4s"/>
-                                    <constraint firstAttribute="height" constant="216" id="tDt-8T-JMf"/>
+                                    <constraint firstAttribute="height" constant="180" id="tDt-8T-JMf"/>
+                                    <constraint firstItem="FFB-XX-p3f" firstAttribute="centerY" secondItem="i7b-7i-9bD" secondAttribute="centerY" id="tJm-cp-OBv"/>
                                     <constraint firstItem="MaM-RZ-OFr" firstAttribute="top" secondItem="i7b-7i-9bD" secondAttribute="bottom" constant="5" id="u6u-Kp-7Ul"/>
                                     <constraint firstItem="KQ9-An-T9S" firstAttribute="leading" secondItem="a0d-Cx-s8S" secondAttribute="leading" id="ua6-FS-9Vf"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="tDt-8T-JMf"/>
                                         <exclude reference="lo9-Te-dsx"/>
                                     </mask>
                                 </variation>
@@ -382,6 +392,7 @@
                             <constraint firstItem="MEN-q5-XOG" firstAttribute="width" secondItem="mz0-Zk-dPR" secondAttribute="width" id="clu-xb-xFa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MEN-q5-XOG" secondAttribute="trailing" constant="-10" id="gNY-0z-k82"/>
                             <constraint firstItem="SX9-DQ-inW" firstAttribute="top" secondItem="X6w-ix-6D3" secondAttribute="bottom" constant="15" id="iSt-1t-nwL"/>
+                            <constraint firstItem="6rq-Vg-SJc" firstAttribute="top" secondItem="a0d-Cx-s8S" secondAttribute="bottom" id="ipi-V7-m0E"/>
                             <constraint firstItem="mz0-Zk-dPR" firstAttribute="leading" secondItem="kIg-j0-ELV" secondAttribute="leadingMargin" id="jAH-5n-caz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vyW-xl-PlD" secondAttribute="trailing" constant="10" id="mmB-L6-MYI"/>
                             <constraint firstItem="MEN-q5-XOG" firstAttribute="top" secondItem="X6w-ix-6D3" secondAttribute="bottom" constant="10" id="sgU-A4-nQD"/>
@@ -396,6 +407,7 @@
                         <outlet property="addBtn" destination="MEN-q5-XOG" id="eU1-1u-y4k"/>
                         <outlet property="categoryPickerView" destination="lBu-VY-8xa" id="YJw-vF-6dR"/>
                         <outlet property="datePickerView" destination="U9X-62-g8h" id="EKB-Jr-05S"/>
+                        <outlet property="notificaitonSwitch" destination="FFB-XX-p3f" id="pBs-Qy-nrH"/>
                         <outlet property="priorityPickerView" destination="KQ9-An-T9S" id="v5k-9V-BZv"/>
                         <outlet property="segmentedControlView" destination="vyW-xl-PlD" id="zF9-w2-x5J"/>
                         <outlet property="taskInfoHeader" destination="i7b-7i-9bD" id="OLz-KO-c4g"/>

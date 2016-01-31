@@ -29,7 +29,6 @@
     
     self.tabbar.selectedItem = self.tabbar.items.firstObject;
     _selectedTab = [IKTGlobal sharedInstance].kCategoryWork;
-    
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
@@ -111,11 +110,11 @@
 }
 
 - (void)setCurrentTasksList:(NSString *) categoryString{
-//    NSString *predString = [NSString stringWithFormat:@"%@", @"WORK"];
     NSString* filter = @"%K CONTAINS[cd] %@";
     NSPredicate *pred = [NSPredicate predicateWithFormat:filter, @"taskCategory", categoryString];
     _currentTasks = [[NSMutableArray alloc]initWithArray:[_allTasks filteredArrayUsingPredicate:pred]];
     [_tableview reloadData];
+    _shareBtn.enabled = _currentTasks.count>0;
 }
 
 #pragma mark Tool Bar Handling Methods
@@ -132,7 +131,6 @@
 }
 
 - (IBAction)cancelDeletion:(UIBarButtonItem *)sender {
-    [_tableview reloadData];
     [self toggleBarButtons:YES];
 }
 
@@ -153,6 +151,7 @@
             }
         }
         [_tableview reloadData];
+        _shareBtn.enabled = _currentTasks.count>0;
         [self toggleBarButtons:YES];
     }else{
         NSMutableArray *alertActions = [[NSMutableArray alloc]init];
@@ -220,7 +219,6 @@
     self.navigationItem.rightBarButtonItem.tintColor = disabled?[UIColor clearColor]:[UIColor whiteColor];
     [self.navigationItem.rightBarButtonItem setEnabled:!disabled];
     self.deleteBtn.enabled = !disabled;
-    self.shareBtn.enabled = !disabled;
     _isEditable = !disabled;
 }
 
@@ -257,7 +255,7 @@
         IKTAddTaskViewController *destinationController = (IKTAddTaskViewController*)segue.destinationViewController;
         destinationController.popoverPresentationController.delegate = self;
         destinationController.delegate = self;
-        destinationController.preferredContentSize = CGSizeMake(320,320);
+        destinationController.preferredContentSize = CGSizeMake(320,270);
     }else if ([segue.identifier isEqualToString:@"menupopover"]){
         IKTMenuViewController *destinationController = (IKTMenuViewController*)segue.destinationViewController;
         destinationController.popoverPresentationController.delegate = self;
@@ -285,6 +283,9 @@
 
 - (void)sendNewTaskData:(IKTTaskData *)newTaskData{
     [_allTasks addObject:newTaskData];
+    if (newTaskData.taskDateTime){
+        [self setupLocalNotification:newTaskData];
+    }
     [self setCurrentTasksList:[newTaskData taskCategory]];
     _selectedTab = [newTaskData taskCategory];
     if ([_selectedTab isEqualToString:[IKTGlobal sharedInstance].kCategoryWork]){
@@ -376,6 +377,17 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller
           didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Adding Local Notifications
+
+- (void) setupLocalNotification:(IKTTaskData*)data{
+    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:data.taskDateTime.timeIntervalSinceNow];
+    localNotification.alertBody = [NSString stringWithFormat:@"Reminder for task : %@",data.taskInfo];
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
 @end

@@ -23,6 +23,7 @@
     _taskInfoTextView.layer.borderColor = [UIColor grayColor].CGColor;
     _taskInfoTextView.layer.borderWidth = 1.0;
     _taskData = [[IKTTaskData alloc]init];
+    _notificaitonSwitch.on = false;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,7 +43,9 @@
 
 - (IBAction)addTask:(UIButton *)sender {
     _taskData.taskInfo = _taskInfoTextView.text;
-    _taskData.taskDateTime = _datePickerView.date;
+    if (_notificaitonSwitch.on && _datePickerView.date.timeIntervalSinceNow>0){
+        _taskData.taskDateTime = _datePickerView.date;
+    }
     if (!_taskData.taskCategory){
         _taskData.taskCategory = @"WORK";
     }
@@ -100,11 +103,13 @@
 #pragma mark - SegmentedControl
 - (IBAction)onSelectingOption:(UISegmentedControl *)sender {
     NSInteger index = sender.selectedSegmentIndex;
+    _taskInfoHeader.hidden = (index!=0 && index!=3);
     _taskInfoTextView.hidden = (index!=0);
-    _taskInfoHeader.hidden = (index!=0);
     _priorityPickerView.hidden = (index!=1);
     _categoryPickerView.hidden = (index!=2);
     _datePickerView.hidden = (index!=3);
+    _notificaitonSwitch.hidden = (index!=3);
+    _taskInfoHeader.text = index==0 ? @"Enter Task Info" : @"Setup notification";
 }
 
 #pragma mark - TextView Methods
