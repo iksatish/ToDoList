@@ -26,9 +26,10 @@
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:[UIApplication sharedApplication]];
     [self toggleBarButtons:YES];
-    
+    _tableview.dataSource = self;
     self.tabbar.selectedItem = self.tabbar.items.firstObject;
     _selectedTab = [IKTGlobal sharedInstance].kCategoryWork;
+    _saveBtn.enabled = NO;
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
@@ -91,7 +92,15 @@
     }else{
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-
+    NSInteger noofTasks = 0;
+    for (int row =0; row < [_tableview numberOfRowsInSection:indexPath.section]; row++) {
+        NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
+        UITableViewCell* cell = [_tableview cellForRowAtIndexPath:cellPath];
+        if([cell accessoryType] == UITableViewCellAccessoryCheckmark){
+            noofTasks++;
+        }
+    }
+    [self toggleBarButtons:noofTasks==0];
 }
 
 #pragma mark Data
@@ -132,6 +141,7 @@
 
 - (IBAction)cancelDeletion:(UIBarButtonItem *)sender {
     [self toggleBarButtons:YES];
+    [_tableview reloadData];
 }
 
 - (IBAction)shareTasks:(UIBarButtonItem *)sender {
@@ -150,23 +160,14 @@
                 [_currentTasks removeObjectAtIndex:row];
             }
         }
+        [self showCustomMessage:@"Deleted Successfully!"];
         [_tableview reloadData];
+        _saveBtn.enabled = YES;
         _shareBtn.enabled = _currentTasks.count>0;
         [self toggleBarButtons:YES];
     }else{
-        NSMutableArray *alertActions = [[NSMutableArray alloc]init];
-        UIAlertAction* okAction = [UIAlertAction
-                                   actionWithTitle:@"OK"
-                                   style:UIAlertActionStyleCancel
-                                   handler:^(UIAlertAction * action)
-                                   {
-                                       NSLog(@"Dismissed Alert");
-                                   }];
-        [alertActions addObject:okAction];
         NSString *message = @"No Task is selected";
-        NSString *title = @"Delete Tasks";
-        [self presentAlertController:title withMessage:message handlingActions:alertActions];
-
+        [self showCustomMessage:message];
     }
 }
 
@@ -184,20 +185,16 @@
                                               attributes:nil];
     }
     NSString * message = @"Saved Successfully!";
+    BOOL showmsg = _saveBtn.enabled;
     if (!taskListArray || ![taskListArray writeToFile:filePath atomically:YES]){
         message = @"Error in saving tasks";
         NSLog(@"Error in writing to file");
+    }else{
+        _saveBtn.enabled = NO;
     }
-    NSMutableArray *alertActions = [[NSMutableArray alloc]init];
-    UIAlertAction* okAction = [UIAlertAction
-                               actionWithTitle:@"Ok"
-                               style:UIAlertActionStyleCancel
-                               handler:^(UIAlertAction * action)
-                               {
-                                   NSLog(@"Dismissed Alert");
-                               }];
-    [alertActions addObject:okAction];
-    [self presentAlertController:@"Save Tasks" withMessage:message handlingActions:alertActions];
+    if (showmsg) {
+        [self showCustomMessage:message];
+    }
 }
 
 #pragma mark AlertController
@@ -283,9 +280,13 @@
 
 - (void)sendNewTaskData:(IKTTaskData *)newTaskData{
     [_allTasks addObject:newTaskData];
+    _saveBtn.enabled = YES;
+    NSString *message = @"New task is added";
     if (newTaskData.taskDateTime){
         [self setupLocalNotification:newTaskData];
+        message = [NSString stringWithFormat:@"%@ and also added a notification on %@", message, newTaskData.taskDateTime];
     }
+    [self showCustomMessage:message];
     [self setCurrentTasksList:[newTaskData taskCategory]];
     _selectedTab = [newTaskData taskCategory];
     if ([_selectedTab isEqualToString:[IKTGlobal sharedInstance].kCategoryWork]){
@@ -388,6 +389,34 @@
     localNotification.timeZone = [NSTimeZone defaultTimeZone];
     localNotification.soundName = UILocalNotificationDefaultSoundName;
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
+
+#pragma mark - Custom Banner Message
+
+- (void) showCustomMessage:(NSString *)message{
+    CGFloat boxHeight = 40.0;
+    CGRect initialRect = CGRectMake(0, -boxHeight, self.view.frame.size.width, boxHeight);
+    CGRect changedRect = CGRectMake(0, 0, self.view.frame.size.width, boxHeight);
+    UILabel *messageLabel = [[UILabel alloc]initWithFrame:initialRect];
+    messageLabel.textColor = [UIColor whiteColor];
+    messageLabel.text = message;
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.backgroundColor = [UIColor blackColor];
+    messageLabel.numberOfLines = 0;
+    messageLabel.adjustsFontSizeToFitWidth = YES;
+    [self.view addSubview:messageLabel];
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^(void) {
+                         messageLabel.frame = changedRect;
+                     }
+                     completion:^(BOOL finished){
+                         [UIView animateWithDuration:0.5 delay:1.0 options:
+                          UIViewAnimationOptionCurveEaseIn animations:^{
+                              messageLabel.frame = initialRect;
+                          } completion:^ (BOOL completed) {
+                              [messageLabel removeFromSuperview];
+                          }];
+                     }];
 }
 
 @end

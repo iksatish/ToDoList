@@ -31,6 +31,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+     [_priorityPickerView selectRow:2 inComponent:0 animated:NO];
+}
 /*
  #pragma mark - Navigation
  

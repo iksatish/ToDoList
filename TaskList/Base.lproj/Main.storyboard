@@ -143,6 +143,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="deleteBtn" destination="6xa-l1-Yfo" id="5eV-Sd-U0f"/>
+                        <outlet property="saveBtn" destination="oVK-gU-fi6" id="51D-h2-2PV"/>
                         <outlet property="shareBtn" destination="nMi-Fo-wbf" id="bhK-RN-bJ7"/>
                         <outlet property="tabbar" destination="NDs-2N-PFh" id="cXP-Qa-5Lj"/>
                         <outlet property="tableview" destination="K6X-QF-E6P" id="WLV-fR-BIA"/>
