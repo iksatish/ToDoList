@@ -1,5 +1,5 @@
 //
-//  AddTaskViewController.h
+//  IKTAddTaskViewController.h
 //  TaskList
 //
 //  Created by Satish Kumar R Kancherla on 1/30/16.
@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TaskData.h"
-@protocol AddNewTaskDelegate<NSObject>
-- (void)sendNewTaskData:(NSMutableDictionary*)newTaskData;
+#import "IKTTaskData.h"
+@protocol IKTAddNewTaskDelegate<NSObject>
+- (void)sendNewTaskData:(IKTTaskData*)newTaskData;
 @end
 
-@interface AddTaskViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate>
+@interface IKTAddTaskViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControlView;
 @property (weak, nonatomic) IBOutlet UITextView *taskInfoTextView;
@@ -21,7 +21,8 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePickerView;
 @property (weak, nonatomic) IBOutlet UILabel *taskInfoHeader;
 @property (strong, nonatomic) NSMutableDictionary *selectedPickerViewData;
-@property (nonatomic, weak) id <AddNewTaskDelegate> delegate;
+@property (strong, nonatomic) IKTTaskData *taskData;
+@property (weak,nonatomic) id <IKTAddNewTaskDelegate> delegate;
 
 
 - (IBAction)addTask:(UIButton *)sender;

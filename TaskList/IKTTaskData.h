@@ -1,5 +1,5 @@
 //
-//  TaskData.h
+//  IKTTaskData.h
 //  TaskList
 //
 //  Created by Satish Kumar R Kancherla on 1/30/16.
@@ -8,11 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TaskData : NSObject
+@interface IKTTaskData : NSObject
 
 @property (strong, nonatomic) NSString *taskInfo;
 @property (strong, nonatomic) NSString *taskPriority;
 @property (strong, nonatomic) NSString *taskCategory;
-@property (strong, nonatomic) NSString *taskDateTime;
+@property (strong, nonatomic) NSDate *taskDateTime;
+
+- (void)getDataObjFromDict:(NSDictionary *)taskDict;
+- (NSDictionary *)getDictFromDataObj;
++ (NSMutableArray *)convertFileContents:(NSArray*)fileContents;
++ (NSMutableArray *)convertForSaving:(NSArray *)allTasks;
 
 @end

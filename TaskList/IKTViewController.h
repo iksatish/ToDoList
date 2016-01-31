@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  IKTViewController.h
 //  TaskList
 //
 //  Created by Satish Kumar R Kancherla on 1/30/16.
@@ -7,17 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AddTaskViewController.h"
+#import "IKTAddTaskViewController.h"
+#import "IKTMenuViewController.h"
+@interface IKTViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UIPopoverPresentationControllerDelegate, IKTAddNewTaskDelegate, IKTMenuDelegate>
 
-@interface ViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UIPopoverPresentationControllerDelegate, AddNewTaskDelegate>
-
-@property (strong, nonatomic) NSMutableDictionary *tasksDictionary;
-@property (strong, nonatomic) NSMutableArray *selectedTasks;
+@property (strong, nonatomic) NSMutableArray *allTasks;
+@property (strong, nonatomic) NSMutableArray *currentTasks;
 @property (nonatomic) BOOL isEditable;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UITabBar *tabbar;
+@property (strong, nonatomic) NSString *selectedTab;
 
-- (IBAction)addNewTask:(UIBarButtonItem *)sender;
 - (IBAction)deleteTasks:(UIBarButtonItem *)sender;
 - (IBAction)saveTasks:(UIBarButtonItem *)sender;
 - (IBAction)cancelDeletion:(UIBarButtonItem *)sender;

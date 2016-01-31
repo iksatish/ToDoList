@@ -1,24 +1,21 @@
 //
-//  ViewController.m
+//  IKTViewController.m
 //  TaskList
 //
 //  Created by Satish Kumar R Kancherla on 1/30/16.
 //  Copyright © 2016 Satish Kumar R Kancherla. All rights reserved.
 //
-#import "ViewController.h"
-
-
-@interface ViewController ()
+#import "IKTViewController.h"
+#import "IKTGlobal.h"
+#define RGB(r, g, b) [UIColor colorWithRed:(float)r / 255.0 green:(float)g / 255.0 blue:(float)b / 255.0 alpha:1.0]
+#define GREEN RGB(66,131,0)
+#define RED RGB(255,30,32)
+#define YELLOW RGB(255,204,0)
+@interface IKTViewController ()
 
 @end
 
-@implementation ViewController
-
-NSString * const TASKDESC = @"taskDesc";
-NSString * const TASKPRIORITY = @"taskPriority";
-NSString * const TASKCATEGORY = @"taskCategory";
-NSString * const TASKDATETIME = @"taskDateTime";
-NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
+@implementation IKTViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,6 +28,8 @@ NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
                                                object:[UIApplication sharedApplication]];
     [self disableBarButton:self.navigationItem.rightBarButtonItem needsDisabled:YES];
     self.tabbar.selectedItem = self.tabbar.items.firstObject;
+    _selectedTab = [IKTGlobal sharedInstance].kCategoryWork;
+    
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
@@ -51,13 +50,24 @@ NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [_selectedTasks count];
+    return [_currentTasks count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"datacell"];
-    NSDictionary *taskData = _selectedTasks[indexPath.row];
-    cell.textLabel.text = [taskData valueForKey:TASKDESC];
+    IKTTaskData *taskData = _currentTasks[indexPath.row];
+    if ([taskData.taskPriority isEqualToString:[IKTGlobal sharedInstance].kPriorityHigh]){
+        [cell setBackgroundColor:RED];
+        [cell.contentView setBackgroundColor:RED];
+    }else if([taskData.taskPriority isEqualToString:[IKTGlobal sharedInstance].kPriorityMedium]){
+        [cell setBackgroundColor:YELLOW];
+        [cell.contentView setBackgroundColor:YELLOW];
+    }else{
+        [cell setBackgroundColor:GREEN];
+        [cell.contentView setBackgroundColor:GREEN];
+    }
+    cell.textLabel.text = taskData.taskInfo;
+    cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.numberOfLines = 0;
     cell.accessoryType = UITableViewCellAccessoryNone;
     UILongPressGestureRecognizer * gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(selectCell:)];
@@ -95,54 +105,30 @@ NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
 
 - (void) loadTempData{
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,TASKLIST_DATAFILE];
-    _selectedTasks = [[NSMutableArray alloc]initWithArray:[[NSArray alloc] initWithContentsOfFile:filePath]];
-    if (!_selectedTasks){
-        _selectedTasks = [[NSMutableArray alloc]init];
-    }
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,[IKTGlobal sharedInstance].kTaskList_DataFile];
+    NSMutableArray *fileContents = [[NSMutableArray alloc]initWithArray:[[NSArray alloc] initWithContentsOfFile:filePath]];
+    _allTasks = [IKTTaskData convertFileContents:fileContents];
+//    if (!_allTasks){
+//        _allTasks = [[NSMutableArray alloc]init];
+//        _currentTasks = [[NSMutableArray alloc]init];
+//    }
     if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
         [[NSFileManager defaultManager] createFileAtPath:filePath
                                                 contents:nil
                                               attributes:nil];
     }
+    [self setCurrentTasksList:[IKTGlobal sharedInstance].kCategoryWork];
 }
 
-- (NSArray*) getDataForCurrentTab : (NSString *) category{
-    if (_tasksDictionary != nil){
-        NSArray *temp1 = [_tasksDictionary valueForKey: category];
-        if (temp1 != nil){
-            return temp1;
-        }
-    }
-    return nil;
+- (void)setCurrentTasksList:(NSString *) categoryString{
+//    NSString *predString = [NSString stringWithFormat:@"%@", @"WORK"];
+    NSString* filter = @"%K CONTAINS[cd] %@";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:filter, @"taskCategory", categoryString];
+    _currentTasks = [[NSMutableArray alloc]initWithArray:[_allTasks filteredArrayUsingPredicate:pred]];
+    [_tableview reloadData];
 }
 
-#pragma mark Add New Task
-//
-//- (void) addNewTask{
-//    UIAlertController *newTaskAlertController = [UIAlertController alertControllerWithTitle:@"Add New Task" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-//    [newTaskAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
-//        textField.placeholder = NSLocalizedString(@"Add your task", @"NewTaskPlaceholder");
-//        [textField addTarget:self
-//                      action:@selector(alertTextFieldDidChange:)
-//            forControlEvents:UIControlEventEditingChanged];
-//    }];
-//    UIAlertAction *addAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Add", @"add action") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-//        [self addTaskFromDialogBox:newTaskAlertController.textFields.firstObject.text];
-//        NSLog(@"Added");
-//    }];
-//    UIAlertAction *cancelAction = [UIAlertAction
-//                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
-//                                   style:UIAlertActionStyleCancel
-//                                   handler:^(UIAlertAction *action)
-//                                   {
-//                                       NSLog(@"Cancel action");
-//                                   }];
-//    [newTaskAlertController addAction:addAction];
-//    [newTaskAlertController addAction:cancelAction];
-//    [addAction setEnabled:NO];
-//    [self presentViewController:newTaskAlertController animated:YES completion:nil];
-//}
+#pragma mark Tool Bar Handling Methods
 
 - (void)alertTextFieldDidChange:(UITextField *)sender
 {
@@ -161,17 +147,6 @@ NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
     [self disableBarButton:self.navigationItem.rightBarButtonItem needsDisabled:YES];
 }
 
-- (IBAction)addNewTask:(UIBarButtonItem *)sender {
-//    [self addNewTask];
-//    let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//    let vc = storyboard.instantiateViewControllerWithIdentifier("PopoverViewController") as! UIViewController
-//    vc.modalPresentationStyle = UIModalPresentationStyle.Popover
-//    let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-//    popover.barButtonItem = sender
-//    presentViewController(vc, animated: true, completion:nil)
-//}
-}
-
 - (IBAction)deleteTasks:(UIBarButtonItem *)sender {
     if (_isEditable){
         int section = 0;
@@ -179,7 +154,8 @@ NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
             NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:section];
             UITableViewCell* cell = [_tableview cellForRowAtIndexPath:cellPath];
             if([cell accessoryType] == UITableViewCellAccessoryCheckmark){
-                [_selectedTasks removeObjectAtIndex:row];
+                [_allTasks removeObject:[_currentTasks objectAtIndex:row]];
+                [_currentTasks removeObjectAtIndex:row];
             }
         }
         [_tableview reloadData];
@@ -208,13 +184,12 @@ NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
 
 - (void) saveTasksData{
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, TASKLIST_DATAFILE];
-    NSMutableArray *taskListArray = [[NSMutableArray alloc] initWithArray:_selectedTasks];
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, [IKTGlobal sharedInstance].kTaskList_DataFile];
+    NSMutableArray *taskListArray = [IKTTaskData convertForSaving:_allTasks];
     if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
         [[NSFileManager defaultManager] createFileAtPath:filePath
                                                 contents:nil
                                               attributes:nil];
-        taskListArray = [[NSMutableArray alloc]init];
     }
     NSString * message = @"Saved Successfully!";
     if (!taskListArray || ![taskListArray writeToFile:filePath atomically:YES]){
@@ -233,16 +208,16 @@ NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
     [self presentAlertController:@"Save Tasks" withMessage:message handlingActions:alertActions];
 }
 
-- (void) addTaskFromDialogBox:(NSMutableDictionary *)newTaskData{
-    
-    NSMutableDictionary *taskdict = [[NSMutableDictionary alloc] init];
-    [taskdict setValue:[newTaskData valueForKey:@"TASKINFO"] forKey:TASKDESC];
-    [taskdict setValue:[newTaskData valueForKey:@"PRIORITY"] forKey:TASKPRIORITY];
-    [taskdict setValue:[newTaskData valueForKey:@"CATEGORY"] forKey:TASKCATEGORY];
-    [taskdict setValue:[newTaskData valueForKey:@"DATETIME"] forKey:TASKDATETIME];
-    [_selectedTasks addObject:taskdict];
-    [_tableview reloadData];
-}
+//- (void) addTaskFromDialogBox:(TaskData *)newTaskData{
+//    
+//    NSMutableDictionary *taskdict = [[NSMutableDictionary alloc] init];
+//    [taskdict setValue:[newTaskData valueForKey:@"TASKINFO"] forKey:[IKTGlobal sharedInstance].kTaskDesc];
+//    [taskdict setValue:[newTaskData valueForKey:@"PRIORITY"] forKey:[IKTGlobal sharedInstance].kTaskPriority];
+//    [taskdict setValue:[newTaskData valueForKey:@"CATEGORY"] forKey:[IKTGlobal sharedInstance].kTaskCategory];
+//    [taskdict setValue:[newTaskData valueForKey:@"DATETIME"] forKey:[IKTGlobal sharedInstance].kTaskDateTime];
+//    [_selectedTasks addObject:taskdict];
+//    [_tableview reloadData];
+//}
 
 #pragma mark AlertController    
 
@@ -260,7 +235,7 @@ NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
 #pragma mark Toggle Bar button
 
 - (void) disableBarButton:(UIBarButtonItem *)barButton needsDisabled:(BOOL) disabled{
-    barButton.tintColor = disabled?[UIColor clearColor]:[UIColor blueColor];
+    barButton.tintColor = disabled?[UIColor clearColor]:[UIColor whiteColor];
     barButton.enabled = !disabled;
 }
 
@@ -273,15 +248,34 @@ NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
 #pragma mark Tabbar Methods
 
 - (void) tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
-    NSLog(@"%lu",[tabBar.items indexOfObject:item]);
+    switch ([tabBar.items indexOfObject:item]) {
+        case 0:
+            _selectedTab = [IKTGlobal sharedInstance].kCategoryWork;
+            break;
+        case 1:
+            _selectedTab = [IKTGlobal sharedInstance].kCategoryHome;
+            break;
+        case 2:
+            _selectedTab = [IKTGlobal sharedInstance].kCategoryMisc;
+            break;
+        default:
+            break;
+    }
+    [self setCurrentTasksList:_selectedTab];
 }
 
 #pragma mark Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier  isEqual: @"newtaskpopover"]){
-        AddTaskViewController *desinationController = (AddTaskViewController*)segue.destinationViewController;
+        IKTAddTaskViewController *desinationController = (IKTAddTaskViewController*)segue.destinationViewController;
         desinationController.popoverPresentationController.delegate = self;
+        desinationController.delegate = self;
+        desinationController.preferredContentSize = CGSizeMake(320,320);
+    }else if ([segue.identifier isEqualToString:@"menupopover"]){
+        IKTMenuViewController *desinationController = (IKTMenuViewController*)segue.destinationViewController;
+        desinationController.popoverPresentationController.delegate = self;
+        desinationController.preferredContentSize = CGSizeMake(150,87);
         desinationController.delegate = self;
     }
 }
@@ -291,10 +285,40 @@ NSString * const TASKLIST_DATAFILE = @"tasklistfile.plist";
     return UIModalPresentationNone;
 }
 
-#pragma mark - New Task Delegate
-
-- (void)sendNewTaskData:(NSMutableDictionary *)newTaskData{
-    [self addTaskFromDialogBox:newTaskData];
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller traitCollection:(UITraitCollection *)traitCollection{
+        return UIModalPresentationNone;
 }
 
+#pragma mark - Custom Delegates
+
+- (void)sendNewTaskData:(IKTTaskData *)newTaskData{
+    [_allTasks addObject:newTaskData];
+    [self setCurrentTasksList:[newTaskData taskCategory]];
+    _selectedTab = [newTaskData taskCategory];
+    if ([_selectedTab isEqualToString:[IKTGlobal sharedInstance].kCategoryWork]){
+        [self.tabbar setSelectedItem:[self.tabbar.items firstObject]];
+    }else if ([_selectedTab isEqualToString:[IKTGlobal sharedInstance].kCategoryHome]){
+        [self.tabbar setSelectedItem:self.tabbar.items[1]];
+    }else{
+        [self.tabbar setSelectedItem:[self.tabbar.items lastObject]];
+    }
+}
+
+- (void)selectMenuOption:(NSInteger)menuOption{
+    if (menuOption == 0){
+        UIAlertAction* okAction = [UIAlertAction
+                                   actionWithTitle:@"OK"
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       NSLog(@"Dismissed Alert");
+                                   }];
+        NSArray *alertActions = [[NSArray alloc]initWithObjects:okAction, nil];
+        NSString *message = @"Task List v1.0 \nDeveloped By Satish \n Lorem Impsum Lorem Impsum ";
+        NSString *title = @"About";
+        [self presentAlertController:title withMessage:message handlingActions:alertActions];
+    }else{
+        [self performSegueWithIdentifier:@"showFaqIdentifier" sender:nil];
+    }
+}
 @end

@@ -9,18 +9,29 @@
 /* Begin PBXBuildFile section */
 		222712571C5D03870019617D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 222712561C5D03870019617D /* main.m */; };
 		2227125A1C5D03880019617D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 222712591C5D03880019617D /* AppDelegate.m */; };
-		2227125D1C5D03880019617D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227125C1C5D03880019617D /* ViewController.m */; };
+		2227125D1C5D03880019617D /* IKTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227125C1C5D03880019617D /* IKTViewController.m */; };
 		222712601C5D03880019617D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2227125E1C5D03880019617D /* Main.storyboard */; };
 		222712621C5D03880019617D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 222712611C5D03880019617D /* Assets.xcassets */; };
 		222712651C5D03880019617D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 222712631C5D03880019617D /* LaunchScreen.storyboard */; };
 		222712701C5D03880019617D /* TaskListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227126F1C5D03880019617D /* TaskListTests.m */; };
 		2227127B1C5D03880019617D /* TaskListUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227127A1C5D03880019617D /* TaskListUITests.m */; };
-		2227128F1C5D68E30019617D /* AddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227128E1C5D68E30019617D /* AddTaskViewController.m */; };
-		222712901C5D68E30019617D /* AddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227128E1C5D68E30019617D /* AddTaskViewController.m */; };
-		222712911C5D68E30019617D /* AddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227128E1C5D68E30019617D /* AddTaskViewController.m */; };
-		222712941C5D96AA0019617D /* TaskData.m in Sources */ = {isa = PBXBuildFile; fileRef = 222712931C5D96AA0019617D /* TaskData.m */; };
-		222712951C5D96AA0019617D /* TaskData.m in Sources */ = {isa = PBXBuildFile; fileRef = 222712931C5D96AA0019617D /* TaskData.m */; };
-		222712961C5D96AA0019617D /* TaskData.m in Sources */ = {isa = PBXBuildFile; fileRef = 222712931C5D96AA0019617D /* TaskData.m */; };
+		2227128F1C5D68E30019617D /* IKTAddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227128E1C5D68E30019617D /* IKTAddTaskViewController.m */; };
+		222712901C5D68E30019617D /* IKTAddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227128E1C5D68E30019617D /* IKTAddTaskViewController.m */; };
+		222712911C5D68E30019617D /* IKTAddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227128E1C5D68E30019617D /* IKTAddTaskViewController.m */; };
+		222712941C5D96AA0019617D /* IKTTaskData.m in Sources */ = {isa = PBXBuildFile; fileRef = 222712931C5D96AA0019617D /* IKTTaskData.m */; };
+		222712951C5D96AA0019617D /* IKTTaskData.m in Sources */ = {isa = PBXBuildFile; fileRef = 222712931C5D96AA0019617D /* IKTTaskData.m */; };
+		222712961C5D96AA0019617D /* IKTTaskData.m in Sources */ = {isa = PBXBuildFile; fileRef = 222712931C5D96AA0019617D /* IKTTaskData.m */; };
+		22D42B781C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B771C5DB7A300B3D9B0 /* IKTGlobal.m */; };
+		22D42B791C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B771C5DB7A300B3D9B0 /* IKTGlobal.m */; };
+		22D42B7A1C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B771C5DB7A300B3D9B0 /* IKTGlobal.m */; };
+		22D42B7B1C5DCE6F00B3D9B0 /* IKTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227125C1C5D03880019617D /* IKTViewController.m */; };
+		22D42B7C1C5DCE6F00B3D9B0 /* IKTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2227125C1C5D03880019617D /* IKTViewController.m */; };
+		22D42B7F1C5E0A7900B3D9B0 /* IKTMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B7E1C5E0A7900B3D9B0 /* IKTMenuViewController.m */; };
+		22D42B801C5E0A7900B3D9B0 /* IKTMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B7E1C5E0A7900B3D9B0 /* IKTMenuViewController.m */; };
+		22D42B811C5E0A7900B3D9B0 /* IKTMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B7E1C5E0A7900B3D9B0 /* IKTMenuViewController.m */; };
+		22D42B841C5E187800B3D9B0 /* IKTAppHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B831C5E187800B3D9B0 /* IKTAppHelpViewController.m */; };
+		22D42B851C5E187800B3D9B0 /* IKTAppHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B831C5E187800B3D9B0 /* IKTAppHelpViewController.m */; };
+		22D42B861C5E187800B3D9B0 /* IKTAppHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B831C5E187800B3D9B0 /* IKTAppHelpViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,8 +56,8 @@
 		222712561C5D03870019617D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		222712581C5D03880019617D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		222712591C5D03880019617D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2227125B1C5D03880019617D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2227125C1C5D03880019617D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2227125B1C5D03880019617D /* IKTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IKTViewController.h; sourceTree = "<group>"; };
+		2227125C1C5D03880019617D /* IKTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IKTViewController.m; sourceTree = "<group>"; };
 		2227125F1C5D03880019617D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		222712611C5D03880019617D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		222712641C5D03880019617D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -57,10 +68,16 @@
 		222712761C5D03880019617D /* TaskListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaskListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2227127A1C5D03880019617D /* TaskListUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaskListUITests.m; sourceTree = "<group>"; };
 		2227127C1C5D03880019617D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2227128D1C5D68E30019617D /* AddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTaskViewController.h; sourceTree = "<group>"; };
-		2227128E1C5D68E30019617D /* AddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTaskViewController.m; sourceTree = "<group>"; };
-		222712921C5D96AA0019617D /* TaskData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskData.h; sourceTree = "<group>"; };
-		222712931C5D96AA0019617D /* TaskData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskData.m; sourceTree = "<group>"; };
+		2227128D1C5D68E30019617D /* IKTAddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKTAddTaskViewController.h; sourceTree = "<group>"; };
+		2227128E1C5D68E30019617D /* IKTAddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKTAddTaskViewController.m; sourceTree = "<group>"; };
+		222712921C5D96AA0019617D /* IKTTaskData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKTTaskData.h; sourceTree = "<group>"; };
+		222712931C5D96AA0019617D /* IKTTaskData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKTTaskData.m; sourceTree = "<group>"; };
+		22D42B761C5DB7A300B3D9B0 /* IKTGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKTGlobal.h; sourceTree = "<group>"; };
+		22D42B771C5DB7A300B3D9B0 /* IKTGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKTGlobal.m; sourceTree = "<group>"; };
+		22D42B7D1C5E0A7900B3D9B0 /* IKTMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKTMenuViewController.h; sourceTree = "<group>"; };
+		22D42B7E1C5E0A7900B3D9B0 /* IKTMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKTMenuViewController.m; sourceTree = "<group>"; };
+		22D42B821C5E187800B3D9B0 /* IKTAppHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKTAppHelpViewController.h; sourceTree = "<group>"; };
+		22D42B831C5E187800B3D9B0 /* IKTAppHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKTAppHelpViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,13 +130,19 @@
 			children = (
 				222712581C5D03880019617D /* AppDelegate.h */,
 				222712591C5D03880019617D /* AppDelegate.m */,
-				2227125B1C5D03880019617D /* ViewController.h */,
-				2227125C1C5D03880019617D /* ViewController.m */,
-				2227128D1C5D68E30019617D /* AddTaskViewController.h */,
-				2227128E1C5D68E30019617D /* AddTaskViewController.m */,
-				222712921C5D96AA0019617D /* TaskData.h */,
-				222712931C5D96AA0019617D /* TaskData.m */,
+				2227125B1C5D03880019617D /* IKTViewController.h */,
+				2227125C1C5D03880019617D /* IKTViewController.m */,
+				2227128D1C5D68E30019617D /* IKTAddTaskViewController.h */,
+				2227128E1C5D68E30019617D /* IKTAddTaskViewController.m */,
+				222712921C5D96AA0019617D /* IKTTaskData.h */,
+				222712931C5D96AA0019617D /* IKTTaskData.m */,
+				22D42B761C5DB7A300B3D9B0 /* IKTGlobal.h */,
+				22D42B771C5DB7A300B3D9B0 /* IKTGlobal.m */,
 				2227125E1C5D03880019617D /* Main.storyboard */,
+				22D42B7D1C5E0A7900B3D9B0 /* IKTMenuViewController.h */,
+				22D42B7E1C5E0A7900B3D9B0 /* IKTMenuViewController.m */,
+				22D42B821C5E187800B3D9B0 /* IKTAppHelpViewController.h */,
+				22D42B831C5E187800B3D9B0 /* IKTAppHelpViewController.m */,
 				222712611C5D03880019617D /* Assets.xcassets */,
 				222712631C5D03880019617D /* LaunchScreen.storyboard */,
 				222712661C5D03880019617D /* Info.plist */,
@@ -284,10 +307,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2227125D1C5D03880019617D /* ViewController.m in Sources */,
-				2227128F1C5D68E30019617D /* AddTaskViewController.m in Sources */,
-				222712941C5D96AA0019617D /* TaskData.m in Sources */,
+				2227125D1C5D03880019617D /* IKTViewController.m in Sources */,
+				22D42B781C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */,
+				2227128F1C5D68E30019617D /* IKTAddTaskViewController.m in Sources */,
+				222712941C5D96AA0019617D /* IKTTaskData.m in Sources */,
 				2227125A1C5D03880019617D /* AppDelegate.m in Sources */,
+				22D42B7F1C5E0A7900B3D9B0 /* IKTMenuViewController.m in Sources */,
+				22D42B841C5E187800B3D9B0 /* IKTAppHelpViewController.m in Sources */,
 				222712571C5D03870019617D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,9 +322,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				222712951C5D96AA0019617D /* TaskData.m in Sources */,
+				222712951C5D96AA0019617D /* IKTTaskData.m in Sources */,
+				22D42B851C5E187800B3D9B0 /* IKTAppHelpViewController.m in Sources */,
 				222712701C5D03880019617D /* TaskListTests.m in Sources */,
-				222712901C5D68E30019617D /* AddTaskViewController.m in Sources */,
+				222712901C5D68E30019617D /* IKTAddTaskViewController.m in Sources */,
+				22D42B791C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */,
+				22D42B7B1C5DCE6F00B3D9B0 /* IKTViewController.m in Sources */,
+				22D42B801C5E0A7900B3D9B0 /* IKTMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,9 +336,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				222712961C5D96AA0019617D /* TaskData.m in Sources */,
+				222712961C5D96AA0019617D /* IKTTaskData.m in Sources */,
+				22D42B861C5E187800B3D9B0 /* IKTAppHelpViewController.m in Sources */,
 				2227127B1C5D03880019617D /* TaskListUITests.m in Sources */,
-				222712911C5D68E30019617D /* AddTaskViewController.m in Sources */,
+				222712911C5D68E30019617D /* IKTAddTaskViewController.m in Sources */,
+				22D42B7A1C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */,
+				22D42B7C1C5DCE6F00B3D9B0 /* IKTViewController.m in Sources */,
+				22D42B811C5E0A7900B3D9B0 /* IKTMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
