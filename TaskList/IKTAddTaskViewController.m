@@ -18,13 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _categoryData = @[[IKTGlobal sharedInstance].kCategoryWork, [IKTGlobal sharedInstance].kCategoryHome, [IKTGlobal sharedInstance].kCategoryMisc];
-    _priorityData = @[[IKTGlobal sharedInstance].kPriorityHigh, [IKTGlobal sharedInstance].kPriorityMedium, [IKTGlobal sharedInstance].kPriorityLow];
-    _taskInfoTextView.layer.borderColor = [UIColor grayColor].CGColor;
-    _taskInfoTextView.layer.borderWidth = 1.0;
-    _taskData = [[IKTTaskData alloc]init];
-    _notificaitonSwitch.on = false;
-    [_taskInfoTextView becomeFirstResponder];
+    [self loadInitialSettings];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,6 +36,20 @@
     if (_taskInfoTextView.isFirstResponder){
         [_taskInfoTextView resignFirstResponder];
     }
+}
+
+- (void) loadInitialSettings{
+    _categoryData = @[[IKTGlobal sharedInstance].kCategoryWork, [IKTGlobal sharedInstance].kCategoryHome, [IKTGlobal sharedInstance].kCategoryMisc];
+    _priorityData = @[[IKTGlobal sharedInstance].kPriorityHigh, [IKTGlobal sharedInstance].kPriorityMedium, [IKTGlobal sharedInstance].kPriorityLow];
+    _taskInfoTextView.layer.borderColor = [UIColor grayColor].CGColor;
+    _taskInfoTextView.layer.borderWidth = 1.0;
+    _taskData = [[IKTTaskData alloc]init];
+    _notificaitonSwitch.on = NO;
+    _notificaitonSwitch.backgroundColor = [UIColor redColor];
+    _notificaitonSwitch.onTintColor = [UIColor greenColor];
+    _notificaitonSwitch.layer.cornerRadius = _notificaitonSwitch.frame.size.height/2;
+    [_taskInfoTextView becomeFirstResponder];
+    _datePickerView.userInteractionEnabled = NO;
 }
 /*
  #pragma mark - Navigation
@@ -67,12 +75,6 @@
 
 - (IBAction)cancelTask:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)loadDataToPickerViews{
-    
-    _priorityPickerView.delegate = self;
-    _priorityPickerView.dataSource = self;
 }
 
 #pragma mark - PickerViews
@@ -122,6 +124,10 @@
     _datePickerView.hidden = (index!=3);
     _notificaitonSwitch.hidden = (index!=3);
     _taskInfoHeader.text = index==0 ? @"Enter Task Info" : @"Setup notification";
+}
+
+- (IBAction)onTogglingSwitch:(UISwitch *)sender {
+    _datePickerView.userInteractionEnabled = sender.on;
 }
 
 #pragma mark - TextView Methods

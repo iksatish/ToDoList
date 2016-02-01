@@ -456,6 +456,9 @@ RED - High
                                             <constraint firstAttribute="height" constant="31" id="fEp-Ax-Vet"/>
                                             <constraint firstAttribute="width" constant="49" id="iTh-iE-vAg"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="onTogglingSwitch:" destination="XBE-ML-gSv" eventType="valueChanged" id="yCW-XL-BcR"/>
+                                        </connections>
                                     </switch>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

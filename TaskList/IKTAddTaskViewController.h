@@ -29,6 +29,7 @@
 - (IBAction)addTask:(UIButton *)sender;
 - (IBAction)cancelTask:(UIButton *)sender;
 - (IBAction)onSelectingOption:(UISegmentedControl *)sender;
+- (IBAction)onTogglingSwitch:(UISwitch *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *addBtn;
 
 @end

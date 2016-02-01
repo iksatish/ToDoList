@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [self loadTempData];
+    [self loadData];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillTerminateNotification:)
                                                  name:UIApplicationDidEnterBackgroundNotification
@@ -105,7 +105,7 @@
 
 #pragma mark Data
 
-- (void) loadTempData{
+- (void) loadData{
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,[IKTGlobal sharedInstance].kTaskList_DataFile];
     NSMutableArray *fileContents = [[NSMutableArray alloc]initWithArray:[[NSArray alloc] initWithContentsOfFile:filePath]];
@@ -266,7 +266,7 @@
         return UIModalPresentationNone;
 }
 
-#pragma mark - Custom Delegates
+#pragma mark - Custom Delegate Methods
 
 - (void)sendNewTaskData:(IKTTaskData *)newTaskData{
     [_allTasks addObject:newTaskData];
