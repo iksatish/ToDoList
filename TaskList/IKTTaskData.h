@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSString *taskPriority;
 @property (strong, nonatomic) NSString *taskCategory;
 @property (strong, nonatomic) NSDate *taskDateTime;
+@property (nonatomic) BOOL taskStatus;
 
 - (void)getDataObjFromDict:(NSDictionary *)taskDict;
 - (NSDictionary *)getDictFromDataObj;

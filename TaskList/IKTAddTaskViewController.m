@@ -7,7 +7,6 @@
 //
 
 #import "IKTAddTaskViewController.h"
-#import "IKTGlobal.h"
 @interface IKTAddTaskViewController ()
 @property (strong, nonatomic) NSArray *priorityData;
 @property (strong, nonatomic) NSArray *categoryData;
@@ -39,8 +38,8 @@
 }
 
 - (void) loadInitialSettings{
-    _categoryData = @[[IKTGlobal sharedInstance].kCategoryWork, [IKTGlobal sharedInstance].kCategoryHome, [IKTGlobal sharedInstance].kCategoryMisc];
-    _priorityData = @[[IKTGlobal sharedInstance].kPriorityHigh, [IKTGlobal sharedInstance].kPriorityMedium, [IKTGlobal sharedInstance].kPriorityLow];
+    _categoryData = @[@"WORK", @"HOME", @"MISC"];
+    _priorityData = @[@"HIGH", @"MEDIUM", @"LOW"];
     _taskInfoTextView.layer.borderColor = [UIColor grayColor].CGColor;
     _taskInfoTextView.layer.borderWidth = 1.0;
     _taskData = [[IKTTaskData alloc]init];

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "IKTTaskData.h"
+
 @protocol IKTAddNewTaskDelegate<NSObject>
 - (void)sendNewTaskData:(IKTTaskData*)newTaskData;
 @end

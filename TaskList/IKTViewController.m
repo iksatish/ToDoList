@@ -6,7 +6,6 @@
 //  Copyright © 2016 Satish Kumar R Kancherla. All rights reserved.
 //
 #import "IKTViewController.h"
-#import "IKTGlobal.h"
 #define RGB(r, g, b) [UIColor colorWithRed:(float)r / 255.0 green:(float)g / 255.0 blue:(float)b / 255.0 alpha:1.0]
 #define GREEN RGB(66,131,0)
 #define RED RGB(255,30,32)
@@ -16,6 +15,13 @@
 @end
 
 @implementation IKTViewController
+
+NSString *kPriorityLow = @"LOW";
+NSString *kPriorityHigh = @"MEDIUM";
+NSString *kPriorityMedium = @"HIGH";
+NSString *kCategoryWork = @"WORK";
+NSString *kCategoryHome = @"HOME";
+NSString *kCategoryMisc = @"MISCELLANEOUS";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,7 +34,7 @@
     [self toggleBarButtons:YES];
     _tableview.dataSource = self;
     _tabbar.selectedItem = self.tabbar.items.firstObject;
-    _selectedTab = [IKTGlobal sharedInstance].kCategoryWork;
+    _selectedTab =  kCategoryWork;
     _saveBtn.enabled = NO;
 }
 
@@ -57,17 +63,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"datacell"];
     IKTTaskData *taskData = _currentTasks[indexPath.row];
-    if ([taskData.taskPriority isEqualToString:[IKTGlobal sharedInstance].kPriorityHigh]){
+    if ([taskData.taskPriority isEqualToString: kPriorityHigh]){
         [cell setBackgroundColor:RED];
         [cell.contentView setBackgroundColor:RED];
-    }else if([taskData.taskPriority isEqualToString:[IKTGlobal sharedInstance].kPriorityMedium]){
+    }else if([taskData.taskPriority isEqualToString: kPriorityMedium]){
         [cell setBackgroundColor:YELLOW];
         [cell.contentView setBackgroundColor:YELLOW];
     }else{
         [cell setBackgroundColor:GREEN];
         [cell.contentView setBackgroundColor:GREEN];
     }
-    cell.textLabel.text = taskData.taskInfo;
+    if (taskData.taskStatus){
+        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:taskData.taskInfo];
+        [attributeString addAttribute:NSStrikethroughStyleAttributeName
+                                value:@2
+                                range:NSMakeRange(0, [attributeString length])];
+        cell.textLabel.attributedText = attributeString;
+    }else{
+        cell.textLabel.text = taskData.taskInfo;
+    }
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.numberOfLines = 0;
     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -115,7 +129,7 @@
                                                 contents:nil
                                               attributes:nil];
     }
-    [self setCurrentTasksList:[IKTGlobal sharedInstance].kCategoryWork];
+    [self setCurrentTasksList: kCategoryWork];
 }
 
 - (void)setCurrentTasksList:(NSString *) categoryString{
@@ -146,12 +160,20 @@
             NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:section];
             UITableViewCell* cell = [_tableview cellForRowAtIndexPath:cellPath];
             if([cell accessoryType] == UITableViewCellAccessoryCheckmark){
-                [_allTasks removeObject:[_currentTasks objectAtIndex:row]];
-                [_currentTasks removeObjectAtIndex:row];
+                if (sender.tag == 2){
+                    NSInteger index = [_allTasks indexOfObject:[_currentTasks objectAtIndex:row]];
+                    IKTTaskData * data = [_allTasks objectAtIndex:index];
+                    data.taskStatus = YES;
+                    [self setCurrentTasksList:_selectedTab];
+                    msg = @"Task(s) Status Updated!";
+                }else{
+                    [_allTasks removeObject:[_currentTasks objectAtIndex:row]];
+                    [_currentTasks removeObjectAtIndex:row];
+                    [_tableview reloadData];
+                    msg = @"Task(s) Deleted Successfully!";
+                }
             }
         }
-        msg = @"Deleted Successfully!";
-        [_tableview reloadData];
         _saveBtn.enabled = YES;
         _shareBtn.enabled = _currentTasks.count>0;
         [self toggleBarButtons:YES];
@@ -205,7 +227,8 @@
 - (void) toggleBarButtons:(BOOL) disabled{
     self.navigationItem.rightBarButtonItem.tintColor = disabled?[UIColor clearColor]:[UIColor whiteColor];
     [self.navigationItem.rightBarButtonItem setEnabled:!disabled];
-    self.deleteBtn.enabled = !disabled;
+    _deleteBtn.enabled = !disabled;
+    _completeBtn.enabled = !disabled;
     _isEditable = !disabled;
 }
 
@@ -220,13 +243,13 @@
 - (void) tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
     switch ([tabBar.items indexOfObject:item]) {
         case 0:
-            _selectedTab = [IKTGlobal sharedInstance].kCategoryWork;
+            _selectedTab =  kCategoryWork;
             break;
         case 1:
-            _selectedTab = [IKTGlobal sharedInstance].kCategoryHome;
+            _selectedTab =  kCategoryHome;
             break;
         case 2:
-            _selectedTab = [IKTGlobal sharedInstance].kCategoryMisc;
+            _selectedTab =  kCategoryMisc;
             break;
         default:
             break;
@@ -274,14 +297,18 @@
     NSString *message = @"New task is added";
     if (newTaskData.taskDateTime){
         [self setupLocalNotification:newTaskData];
-        message = [NSString stringWithFormat:@"%@ and also added a notification for %@", message, newTaskData.taskDateTime];
+        NSDateFormatter *displayFormatter = [NSDateFormatter new];
+        [displayFormatter setDateFormat:@"E, dd MMM yyyy H:mm"];
+        [displayFormatter setTimeZone:[NSTimeZone defaultTimeZone]];
+        NSString *displayString = [displayFormatter stringFromDate:newTaskData.taskDateTime];
+        message = [NSString stringWithFormat:@"%@ and also added a notification for %@", message, displayString];
     }
     [self showCustomMessage:message];
     [self setCurrentTasksList:[newTaskData taskCategory]];
     _selectedTab = [newTaskData taskCategory];
-    if ([_selectedTab isEqualToString:[IKTGlobal sharedInstance].kCategoryWork]){
+    if ([_selectedTab isEqualToString: kCategoryWork]){
         [self.tabbar setSelectedItem:[self.tabbar.items firstObject]];
-    }else if ([_selectedTab isEqualToString:[IKTGlobal sharedInstance].kCategoryHome]){
+    }else if ([_selectedTab isEqualToString: kCategoryHome]){
         [self.tabbar setSelectedItem:self.tabbar.items[1]];
     }else{
         [self.tabbar setSelectedItem:[self.tabbar.items lastObject]];

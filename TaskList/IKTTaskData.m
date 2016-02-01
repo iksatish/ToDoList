@@ -7,23 +7,29 @@
 //
 
 #import "IKTTaskData.h"
-#import "IKTGlobal.h"
 
 @implementation IKTTaskData
+    NSString *kTaskDesc = @"taskDesc";
+    NSString *kTaskPriority = @"taskPriority";
+    NSString *kTaskCategory = @"taskCategory";
+    NSString *kTaskDateTime = @"taskDateTime";
+    NSString *kTaskStatus = @"takStatus";
 
 - (void)getDataObjFromDict:(NSDictionary *)taskDict{
-    _taskInfo = [taskDict valueForKey:[IKTGlobal sharedInstance].kTaskDesc];
-    _taskPriority = [taskDict valueForKey:[IKTGlobal sharedInstance].kTaskPriority];
-    _taskCategory = [taskDict valueForKey:[IKTGlobal sharedInstance].kTaskCategory];
-    _taskDateTime = [taskDict valueForKey:[IKTGlobal sharedInstance].kTaskDateTime];
+    _taskInfo = [taskDict valueForKey: kTaskDesc];
+    _taskPriority = [taskDict valueForKey: kTaskPriority];
+    _taskCategory = [taskDict valueForKey: kTaskCategory];
+    _taskDateTime = [taskDict valueForKey: kTaskDateTime];
+    _taskStatus = [[taskDict valueForKey: kTaskStatus] boolValue];
 }
 
 - (NSMutableDictionary *)getDictFromDataObj{
     NSMutableDictionary *taskDict = [[NSMutableDictionary alloc]init];
-    [taskDict setValue:_taskInfo forKey:[IKTGlobal sharedInstance].kTaskDesc];
-    [taskDict setValue:_taskPriority forKey:[IKTGlobal sharedInstance].kTaskPriority];
-    [taskDict setValue:_taskCategory forKey:[IKTGlobal sharedInstance].kTaskCategory];
-    [taskDict setValue:_taskDateTime forKey:[IKTGlobal sharedInstance].kTaskDateTime];
+    [taskDict setValue:_taskInfo forKey: kTaskDesc];
+    [taskDict setValue:_taskPriority forKey: kTaskPriority];
+    [taskDict setValue:_taskCategory forKey: kTaskCategory];
+    [taskDict setValue:_taskDateTime forKey: kTaskDateTime];
+    [taskDict setValue:[NSNumber numberWithBool:_taskStatus] forKey: kTaskStatus];
     return taskDict;
 }
 

@@ -76,7 +76,13 @@
                                             <action selector="saveTasks:" destination="BYZ-38-t0r" id="GeN-Kd-6F2"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem width="40" systemItem="trash" id="6xa-l1-Yfo">
+                                    <barButtonItem tag="2" image="tick_all.png" id="2MQ-Fv-10V">
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="deleteTasks:" destination="BYZ-38-t0r" id="bTI-bL-pcM"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem tag="3" width="40" systemItem="trash" id="6xa-l1-Yfo">
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="deleteTasks:" destination="BYZ-38-t0r" id="tP2-Mg-Odh"/>
@@ -142,6 +148,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="completeBtn" destination="2MQ-Fv-10V" id="Raz-oy-QhC"/>
                         <outlet property="deleteBtn" destination="6xa-l1-Yfo" id="5eV-Sd-U0f"/>
                         <outlet property="saveBtn" destination="oVK-gU-fi6" id="51D-h2-2PV"/>
                         <outlet property="shareBtn" destination="nMi-Fo-wbf" id="bhK-RN-bJ7"/>
@@ -275,6 +282,27 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <attributedString key="attributedText">
                                     <fragment>
+                                        <string key="content">Login
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="468" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">Login is just to identify multiple users. It has to be at least 4 characters.
+
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="Helvetica"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="468" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
                                         <string key="content">How to add a task?
 </string>
                                         <attributes>
@@ -285,7 +313,7 @@
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">Click on Add ‘+’ symbol and write a brief info and select the category, priority of your task and schedule a notification if you need. Task description has to be atleast 3 characters. Click on Add button to successfully add a task.
+                                        <string key="content">Click on Add ‘+’ symbol and write a brief info and select the category, priority of your task and schedule a notification if you need. Task description has to be at least 3 characters. Click on Add button to successfully add a task.
 
 </string>
                                         <attributes>
@@ -338,7 +366,7 @@
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">How to save my tasks?
+                                        <string key="content">How to mark a task as completed?
 </string>
                                         <attributes>
                                             <font key="NSFont" size="14" name="Helvetica-Bold"/>
@@ -348,7 +376,28 @@
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">Click on save button if you added any new task or deleted any old ones.
+                                        <string key="content">Select the tasks that you want to mark as completed and click on tick icon.
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="Helvetica"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="468" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+How to save my tasks?
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tailIndent="468" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">Click on save button if you added any new task, deleted or updated any old ones.
 
 </string>
                                         <attributes>
@@ -393,7 +442,7 @@
                                         <string key="content">Colors indicate the priority/urgency of the task.
 GREEN – Low
 YELLOW – Medium
-RED - High
+RED – High
 </string>
                                         <attributes>
                                             <font key="NSFont" size="14" name="Helvetica"/>
@@ -639,6 +688,7 @@ RED - High
         <image name="menu" width="20" height="20"/>
         <image name="miscellaneous.png" width="32" height="32"/>
         <image name="save1" width="24" height="24"/>
+        <image name="tick_all.png" width="24" height="24"/>
         <image name="work1" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
