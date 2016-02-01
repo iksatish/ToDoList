@@ -164,16 +164,15 @@ NSString *kCategoryMisc = @"MISCELLANEOUS";
                     NSInteger index = [_allTasks indexOfObject:[_currentTasks objectAtIndex:row]];
                     IKTTaskData * data = [_allTasks objectAtIndex:index];
                     data.taskStatus = YES;
-                    [self setCurrentTasksList:_selectedTab];
                     msg = @"Task(s) Status Updated!";
                 }else{
                     [_allTasks removeObject:[_currentTasks objectAtIndex:row]];
                     [_currentTasks removeObjectAtIndex:row];
-                    [_tableview reloadData];
                     msg = @"Task(s) Deleted Successfully!";
                 }
             }
         }
+        [self setCurrentTasksList:_selectedTab];
         _saveBtn.enabled = YES;
         _shareBtn.enabled = _currentTasks.count>0;
         [self toggleBarButtons:YES];
