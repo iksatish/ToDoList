@@ -17,6 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _loginBtn.enabled = NO;
+    _loginBtn.alpha = 0.7;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,6 +46,11 @@
     [self navigateToTaskList:[NSString stringWithFormat:@"%@TaskList.plist",userId]];
 }
 
+- (IBAction)textFieldValueChange:(UITextField *)sender {
+    _loginBtn.enabled = sender.text.length > 3;
+    _loginBtn.alpha = sender.text.length > 3 ? 1 : 0.7;
+}
+
 - (void) navigateToTaskList:(NSString *)fileName{
     NSString * storyboardName = @"Main";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle: nil];
@@ -51,5 +58,6 @@
     homeVC.fileName = fileName;
     [self.navigationController setViewControllers:[NSArray arrayWithObject:homeVC]];
 }
+
 
 @end

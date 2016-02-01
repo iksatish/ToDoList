@@ -11,5 +11,7 @@
 @interface IKTSimpleLoginViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *userIdTextField;
 - (IBAction)doFormAction:(UIButton *)sender;
+- (IBAction)textFieldValueChange:(UITextField *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 
 @end
