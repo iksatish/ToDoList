@@ -24,6 +24,7 @@
     _taskInfoTextView.layer.borderWidth = 1.0;
     _taskData = [[IKTTaskData alloc]init];
     _notificaitonSwitch.on = false;
+    [_taskInfoTextView becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,6 +35,13 @@
 - (void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
      [_priorityPickerView selectRow:2 inComponent:0 animated:NO];
+}
+
+- (void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (_taskInfoTextView.isFirstResponder){
+        [_taskInfoTextView resignFirstResponder];
+    }
 }
 /*
  #pragma mark - Navigation

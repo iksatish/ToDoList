@@ -27,7 +27,7 @@
                                                object:[UIApplication sharedApplication]];
     [self toggleBarButtons:YES];
     _tableview.dataSource = self;
-    self.tabbar.selectedItem = self.tabbar.items.firstObject;
+    _tabbar.selectedItem = self.tabbar.items.firstObject;
     _selectedTab = [IKTGlobal sharedInstance].kCategoryWork;
     _saveBtn.enabled = NO;
 }
@@ -128,17 +128,6 @@
 
 #pragma mark Tool Bar Handling Methods
 
-- (void)alertTextFieldDidChange:(UITextField *)sender
-{
-    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
-    if (alertController)
-    {
-        UITextField *login = alertController.textFields.firstObject;
-        UIAlertAction *okAction = alertController.actions.firstObject;
-        okAction.enabled = login.text.length > 2;
-    }
-}
-
 - (IBAction)cancelDeletion:(UIBarButtonItem *)sender {
     [self toggleBarButtons:YES];
     [_tableview reloadData];
@@ -150,6 +139,7 @@
 }
 
 - (IBAction)deleteTasks:(UIBarButtonItem *)sender {
+    NSString *msg = @"";
     if (_isEditable){
         int section = 0;
         for (int row = (int)[_tableview numberOfRowsInSection:section]-1; row >= 0 ; row--) {
@@ -160,15 +150,15 @@
                 [_currentTasks removeObjectAtIndex:row];
             }
         }
-        [self showCustomMessage:@"Deleted Successfully!"];
+        msg = @"Deleted Successfully!";
         [_tableview reloadData];
         _saveBtn.enabled = YES;
         _shareBtn.enabled = _currentTasks.count>0;
         [self toggleBarButtons:YES];
     }else{
-        NSString *message = @"No Task is selected";
-        [self showCustomMessage:message];
+        msg = @"No Task is selected";
     }
+    [self showCustomMessage:msg];
 }
 
 - (IBAction)saveTasks:(UIBarButtonItem *)sender {
@@ -284,7 +274,7 @@
     NSString *message = @"New task is added";
     if (newTaskData.taskDateTime){
         [self setupLocalNotification:newTaskData];
-        message = [NSString stringWithFormat:@"%@ and also added a notification on %@", message, newTaskData.taskDateTime];
+        message = [NSString stringWithFormat:@"%@ and also added a notification for %@", message, newTaskData.taskDateTime];
     }
     [self showCustomMessage:message];
     [self setCurrentTasksList:[newTaskData taskCategory]];
@@ -310,7 +300,7 @@
                                                NSLog(@"Dismissed Alert");
                                            }];
                 NSArray *alertActions = [[NSArray alloc]initWithObjects:okAction, nil];
-                NSString *message = @"Task List v1.0 \nDeveloped By Satish \n Lorem Impsum Lorem Impsum ";
+                NSString *message = @"Task List v1.0 \nDeveloped By Satish \n Have fun :) ";
                 NSString *title = @"About";
                 [self presentAlertController:title withMessage:message handlingActions:alertActions];
             }else{
