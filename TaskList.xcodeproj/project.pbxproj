@@ -39,6 +39,12 @@
 		22C046AF1C5EF3C4000AED92 /* miscellaneous.png in Resources */ = {isa = PBXBuildFile; fileRef = 22C046AE1C5EF3C4000AED92 /* miscellaneous.png */; };
 		22C046B01C5EF3C4000AED92 /* miscellaneous.png in Resources */ = {isa = PBXBuildFile; fileRef = 22C046AE1C5EF3C4000AED92 /* miscellaneous.png */; };
 		22C046B11C5EF3C4000AED92 /* miscellaneous.png in Resources */ = {isa = PBXBuildFile; fileRef = 22C046AE1C5EF3C4000AED92 /* miscellaneous.png */; };
+		22C046C61C5F0B0B000AED92 /* IKTSimpleLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C046C51C5F0B0B000AED92 /* IKTSimpleLoginViewController.m */; };
+		22C046C71C5F0B0B000AED92 /* IKTSimpleLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C046C51C5F0B0B000AED92 /* IKTSimpleLoginViewController.m */; };
+		22C046C81C5F0B0B000AED92 /* IKTSimpleLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C046C51C5F0B0B000AED92 /* IKTSimpleLoginViewController.m */; };
+		22C046DF1C5F1581000AED92 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 22C046CE1C5F1581000AED92 /* Icon.png */; };
+		22C046E01C5F1581000AED92 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 22C046CE1C5F1581000AED92 /* Icon.png */; };
+		22C046E11C5F1581000AED92 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 22C046CE1C5F1581000AED92 /* Icon.png */; };
 		22D42B781C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B771C5DB7A300B3D9B0 /* IKTGlobal.m */; };
 		22D42B791C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B771C5DB7A300B3D9B0 /* IKTGlobal.m */; };
 		22D42B7A1C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D42B771C5DB7A300B3D9B0 /* IKTGlobal.m */; };
@@ -96,6 +102,9 @@
 		22C046921C5ED290000AED92 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
 		22C046931C5ED290000AED92 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		22C046AE1C5EF3C4000AED92 /* miscellaneous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = miscellaneous.png; sourceTree = "<group>"; };
+		22C046C41C5F0B0B000AED92 /* IKTSimpleLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKTSimpleLoginViewController.h; sourceTree = "<group>"; };
+		22C046C51C5F0B0B000AED92 /* IKTSimpleLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKTSimpleLoginViewController.m; sourceTree = "<group>"; };
+		22C046CE1C5F1581000AED92 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		22D42B761C5DB7A300B3D9B0 /* IKTGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKTGlobal.h; sourceTree = "<group>"; };
 		22D42B771C5DB7A300B3D9B0 /* IKTGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IKTGlobal.m; sourceTree = "<group>"; };
 		22D42B7D1C5E0A7900B3D9B0 /* IKTMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKTMenuViewController.h; sourceTree = "<group>"; };
@@ -167,6 +176,8 @@
 				22D42B7E1C5E0A7900B3D9B0 /* IKTMenuViewController.m */,
 				22D42B821C5E187800B3D9B0 /* IKTAppHelpViewController.h */,
 				22D42B831C5E187800B3D9B0 /* IKTAppHelpViewController.m */,
+				22C046C41C5F0B0B000AED92 /* IKTSimpleLoginViewController.h */,
+				22C046C51C5F0B0B000AED92 /* IKTSimpleLoginViewController.m */,
 				222712611C5D03880019617D /* Assets.xcassets */,
 				222712631C5D03880019617D /* LaunchScreen.storyboard */,
 				222712661C5D03880019617D /* Info.plist */,
@@ -205,6 +216,7 @@
 		22C0468D1C5ED265000AED92 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				22C046CE1C5F1581000AED92 /* Icon.png */,
 				22C0468E1C5ED290000AED92 /* save1.png */,
 				22C046901C5ED290000AED92 /* home.png */,
 				22C046AE1C5EF3C4000AED92 /* miscellaneous.png */,
@@ -325,6 +337,7 @@
 				22C0469A1C5ED290000AED92 /* home.png in Resources */,
 				222712651C5D03880019617D /* LaunchScreen.storyboard in Resources */,
 				222712621C5D03880019617D /* Assets.xcassets in Resources */,
+				22C046DF1C5F1581000AED92 /* Icon.png in Resources */,
 				222712601C5D03880019617D /* Main.storyboard in Resources */,
 				22C0469D1C5ED290000AED92 /* work1.png in Resources */,
 			);
@@ -334,6 +347,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22C046E01C5F1581000AED92 /* Icon.png in Resources */,
 				22C0469E1C5ED290000AED92 /* work1.png in Resources */,
 				22C046A11C5ED290000AED92 /* save.png in Resources */,
 				22C046A41C5ED290000AED92 /* menu.png in Resources */,
@@ -347,6 +361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22C046E11C5F1581000AED92 /* Icon.png in Resources */,
 				22C0469F1C5ED290000AED92 /* work1.png in Resources */,
 				22C046A21C5ED290000AED92 /* save.png in Resources */,
 				22C046A51C5ED290000AED92 /* menu.png in Resources */,
@@ -366,6 +381,7 @@
 				2227125D1C5D03880019617D /* IKTViewController.m in Sources */,
 				22D42B781C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */,
 				2227128F1C5D68E30019617D /* IKTAddTaskViewController.m in Sources */,
+				22C046C61C5F0B0B000AED92 /* IKTSimpleLoginViewController.m in Sources */,
 				222712941C5D96AA0019617D /* IKTTaskData.m in Sources */,
 				2227125A1C5D03880019617D /* AppDelegate.m in Sources */,
 				22D42B7F1C5E0A7900B3D9B0 /* IKTMenuViewController.m in Sources */,
@@ -385,6 +401,7 @@
 				22D42B791C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */,
 				22D42B7B1C5DCE6F00B3D9B0 /* IKTViewController.m in Sources */,
 				22D42B801C5E0A7900B3D9B0 /* IKTMenuViewController.m in Sources */,
+				22C046C71C5F0B0B000AED92 /* IKTSimpleLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +416,7 @@
 				22D42B7A1C5DB7A300B3D9B0 /* IKTGlobal.m in Sources */,
 				22D42B7C1C5DCE6F00B3D9B0 /* IKTViewController.m in Sources */,
 				22D42B811C5E0A7900B3D9B0 /* IKTMenuViewController.m in Sources */,
+				22C046C81C5F0B0B000AED92 /* IKTSimpleLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

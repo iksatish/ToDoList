@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBtn;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBtn;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBtn;
+@property (strong, nonatomic) NSString* fileName;
 
 - (IBAction)deleteTasks:(UIBarButtonItem *)sender;
 - (IBAction)saveTasks:(UIBarButtonItem *)sender;

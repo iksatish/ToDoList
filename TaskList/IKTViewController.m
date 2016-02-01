@@ -107,7 +107,7 @@
 
 - (void) loadData{
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,[IKTGlobal sharedInstance].kTaskList_DataFile];
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,_fileName];
     NSMutableArray *fileContents = [[NSMutableArray alloc]initWithArray:[[NSArray alloc] initWithContentsOfFile:filePath]];
     _allTasks = [IKTTaskData convertFileContents:fileContents];
     if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
@@ -167,7 +167,7 @@
 
 - (void) saveTasksData{
     NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, [IKTGlobal sharedInstance].kTaskList_DataFile];
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, _fileName];
     NSMutableArray *taskListArray = [IKTTaskData convertForSaving:_allTasks];
     if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]){
         [[NSFileManager defaultManager] createFileAtPath:filePath
